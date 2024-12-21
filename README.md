@@ -1,4 +1,4 @@
-# Amazon Review Analysis
+# Linguistic Amazon Review Analysis
 Linguistic analysis on a large dataset of Amazon reviews. Goal was twofold:
 determine if text classification models can predict the likelihood of a review
 being useful and identify linguistic differences in reviews across product
