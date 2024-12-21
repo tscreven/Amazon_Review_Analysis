@@ -1,5 +1,4 @@
 import json
-from collections import Counter
 import nltk
 nltk.download('tagsets_json')
 from nltk import word_tokenize
