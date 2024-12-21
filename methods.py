@@ -4,6 +4,10 @@ import nltk
 nltk.download('tagsets_json')
 from nltk import word_tokenize
 
+# TODO: Change PATH_TO_REVIEWS to correct path to decimated json files. Run
+# download.ipynb and decimated.ipynb where this path correlates to.
+PATH_TO_REVIEWS = 'Insert path to decimated directory containing json files of product reviews for each category'
+
 #
 # Return list of part of speech tags for all reviews in file_path. 
 #
@@ -27,19 +31,21 @@ def label_pos(file_path):
 # reviews.
 #
 def get_data(file_path, vote_threshold):
-    rev_texts = []
-    rev_help_class = []
+    remove_duplicates = True
+    texts = []
+    helpfulness_classifications = []
     prev_lines = set()
     with open(file_path, 'r') as f:
         for line in f:
-            if line in prev_lines: # Don't process duplicate lines
-                continue
-            prev_lines.add(line)
+            if remove_duplicates:
+                if line in prev_lines: # Don't process duplicate lines
+                    continue
+                prev_lines.add(line)
             review = json.loads(line)
             text = review['reviewText']
-            rev_texts.append(text)
-            rev_help_class.append(int('vote' in review and int(review['vote'].replace(',','')) >= vote_threshold))
-    return rev_texts, rev_help_class
+            texts.append(text)
+            helpfulness_classifications.append(int('vote' in review and int(review['vote'].replace(',','')) >= vote_threshold))
+    return texts, helpfulness_classifications
 
 #
 # Split text and labels into training and testing sets. Split is float value
@@ -59,7 +65,22 @@ def split_data(text, labels, split):
 # separate folder due to size of files.
 #
 def get_decimated_name(base):
-    return '/opt/lin127-project-data/decimated/'+ base+ '.json'
+    if PATH_TO_REVIEWS == 'Insert path to decimated directory containing json files of product reviews for each category.':
+        raise Exception('Change PATH_TO_REVIEWS to directory path to decimated json files.')
+    return f'{PATH_TO_REVIEWS}/decimated/'+ base+ '.json'
+
+#
+# Return category base's product reviews into training and testing sets,
+# corresponding labels for the trianing set, and prior probabilities of
+# helpfulness and unhelpfulness class in the training set.
+#
+def process_category(base, vote_threshold, split):
+    text, labels = get_data(get_decimated_name(base), vote_threshold)
+    train_text, train_labels, test_text, test_labels = split_data(text, labels, split)
+
+    prob_helpful = sum(train_labels) / len(train_labels) # helpfulness labeled as 1
+    prob_unhelpful = 1 - prob_helpful
+    return prob_helpful, prob_unhelpful, train_text, test_text, train_labels, test_labels
 
 #  
 # Return list of base names. Excluded Appliances_5 because only around 200 unique
