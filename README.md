@@ -119,3 +119,8 @@ heatmap of this table showing the difference in part of speech usage in each
 category’s reviews.  Then, uses a 2d embedding of the frequency distribution
 vectors to visualize POS usage relationships between categories. Read report
 for complete results and analysis.
+
+**To Do**:<br>
+* If first time running, set `GENERATE_POS_FILES` to `True` in the second cell.
+  Afterwards, set it back to `False` because the computation to generate the
+  part of speech tags are computationaly expensive.
