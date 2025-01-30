@@ -32,7 +32,7 @@ the 2019 Conference on Empirical Methods in Natural Language Processing.
 * Link to dataset: https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/
 
 ## Downloading and Decimating Data
-Download and decimate 15 gigabytes of data
+Download and decimate 15 gigabytes of data.
 
 **To Do**:<br>
 * Choose a file location suitable to store 15 gigabytes of data.
@@ -60,31 +60,27 @@ explanations of each function.
   product reviews for each category. If json files are located in the
   same location you plan to use the data in, set string variable to: `"."`.
 * Code removes duplicate reviews in every product category. If you want to keep
-  duplicate reviews, change bool variable `remove_duplicates` to `True` in
+  duplicate reviews, change bool variable `remove_duplicates` to `False` in
   `get_data()`. `get_data()` used to gather data for both Naïve Bayes and
   `fastText` model.
 
 ## Naïve Bayes Model
 For each product category, I built, trained, and tested a hand coded Naïve
-Bayes model. It is a binary classifier that predict the likelihood of a review
+Bayes model. It is a binary classifier which predicts the likelihood of a review
 being helpful or unhelpful. The first 80% of the randomly sorted reviews in
-each category was used for training and the rest for testing.  The Naïve Bayes
+each category was used for training and the last 20% for testing.  The Naïve Bayes
 model used a bag of words technique with logarithmic add-one smoothing, and
 normalization of the class probabilities. `nltk` is used for tokenization.
 Examine `naive_bayes.py` and/or read the report for detailed explanation of
 model construction and execution. Read report for results and analysis.
 
-`python3 naive_bayes.py <excel_filename> <-generate_excel> <-print_all_results>`
+`python3 naive_bayes.py <excel_filename> <-print_all_results>`
 * `<excel_filename>` is an optional argument for the path to the Excel file
-  where results will be stored. If set -generate_excel, have to input a
-  filepath.
-* `<-generate_excel>` is an optional argument to generate an Excel file
-  containing the results with path `<excel_filename>`. Results include each
-  category model's precision@5, prior helpfulness probability, difference
-  between precision@5 and helpfulness probability, ratio between precision@5
-  and helpfulness probability, and number of reviews in the training set and
-  testing set. If set `-generate_excel`, have to give argument for
-  `<excel_filename>`.
+  where results will be stored. The following statistics for each category
+  model stored on Excel sheet: precision@5, prior helpfulness probability,
+  difference between precision@5 and helpfulness probability, ratio between
+  precision@5 and helpfulness probability, and number of reviews in the
+  training set and testing set.
 * `<-print_all_results>` is an optional argument to print each category model's
   precision@5, prior helpfulness probability, difference between precision@5
   and helpfulness probability, ratio between precision@5 and helpfulness
@@ -102,17 +98,13 @@ training on the remaining review tokens. `nltk` is used for tokenization.
 Examine `fasttext_model.py` and/or read the report for detailed explanation of
 model construction and execution. Read report for results and analysis.
 
-`python3 fasttext_model.py <excel_filename> <-generate_excel> <-print_all_results>`
-* `<excel_filename>` is an optional argument for the path to the excel file
-  where results will be stored. If set `-generate_excel`, have to input a
-  filepath.
-* `<-generate_excel>` is an optional argument to generate an excile file
-  containing the results with path `<excel_filename>`. Results include each
-  category model's precision@5, prior helpfulness probability, difference
-  between precision@5 and helpfulness probability, ratio between precision@5
-  and helpfulness probability, and number of reviews in the training set and
-  testing set. If set `-generate_excel`, have to give argument for
-  `<excel_filename>`.
+`python3 fasttext_model.py <excel_filename> <-print_all_results>`
+* `<excel_filename>` is an optional argument for the path to the Excel file
+  where results will be stored. The following statistics for each category
+  model stored on Excel sheet: precision@5, prior helpfulness probability,
+  difference between precision@5 and helpfulness probability, ratio between
+  precision@5 and helpfulness probability, and number of reviews in the
+  training set and testing set.
 * `<-print_all_results>` is an optional argument to print each category model's
   precision@5, prior helpfulness probability, difference between precision@5
   and helpfulness probability, ratio between precision@5 and helpfulness
