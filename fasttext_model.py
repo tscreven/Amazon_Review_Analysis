@@ -89,7 +89,7 @@ def main(print_all_results, excel_filename=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run Naive Bayes model.')
-    parser.add_argument('excel_filename',nargs='?',help='Name of Excel file. If set -generate_excel, have to input a filename.')
+    parser.add_argument('excel_filename',nargs='?',help='Name of Excel file. Optional argument, do not give filename if do not want results written into Excel sheet.')
     parser.add_argument('-print_all_results',help='Print extensive results to terminal.',action='store_true')
     args = parser.parse_args()
 
