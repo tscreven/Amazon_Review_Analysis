@@ -43,7 +43,6 @@ def run(base):
     helpful_fd, unhelpful_fd, prob_helpful, prob_unhelpful, test_text, test_labels, train_length, test_length = get_parameters(base)
     vocabulary = set(helpful_fd.keys()).union(set(unhelpful_fd.keys()))
     total_vocab_size = len(vocabulary)
-    num_correct = 0
     results = []
     helpful_class_size = sum(helpful_fd.values())
     unhelpful_class_size = sum(unhelpful_fd.values())
@@ -54,10 +53,6 @@ def run(base):
         helpful_prob = normalize_log_probabilities(unnorm_helpful_prob, unnorm_unhelpful_prob)
         prediction = unnorm_helpful_prob >= unnorm_unhelpful_prob
         results.append((helpful_prob, prediction, label))
-        if unnorm_helpful_prob >= unnorm_unhelpful_prob and label == 1:
-            num_correct += 1
-        elif unnorm_unhelpful_prob > unnorm_helpful_prob and label == 0:
-            num_correct += 1
 
     results = sorted(results, key=lambda x: x[0], reverse=True)
     top_size = int(len(results) * 0.05)
@@ -85,7 +80,7 @@ def main(print_all_results, excel_filename=None):
         train_sizes.append(train_len)
         test_sizes.append(test_len)
         if print_all_results:
-            print(f'{base.strip('_5')}: prec = {prec} | helpfulness probability = {prob_helpful} | delta = {diff_prec_prior} | ratio = {ratio_prec_prior}')
+            print(f'{base.strip('_5')}: precision = {prec} | prior helpfulness probability = {prob_helpful} | delta = {diff_prec_prior} | ratio = {ratio_prec_prior}')
         else:
              print(f'{base.strip('_5')}: prec = {prec}')
     
