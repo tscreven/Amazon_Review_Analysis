@@ -82,7 +82,7 @@ def main(print_all_results, excel_filename=None):
         if print_all_results:
             print(f'{base.strip('_5')}: precision = {prec} | prior helpfulness probability = {prob_helpful} | delta = {diff_prec_prior} | ratio = {ratio_prec_prior}')
         else:
-             print(f'{base.strip('_5')}: prec = {prec}')
+             print(f'{base.strip('_5')}: precision = {prec}')
     
     if excel_filename is not None:
         data = {'Category': BASE_NAMES, 'Precision at 5': precisions, 
